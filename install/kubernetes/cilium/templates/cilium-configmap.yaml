@@ -593,8 +593,8 @@ data:
 {{- if hasKey .Values "egressMasqueradeInterfaces" }}
   egress-masquerade-interfaces: {{ .Values.egressMasqueradeInterfaces }}
 {{- end }}
-{{- if hasKey .Values.ipMasqAgent "enabled" }}
-  enable-ip-masq-agent: {{ .Values.ipMasqAgent.enabled | quote }}
+{{- if and .Values.ipMasqAgent .Values.ipMasqAgent.enabled }}
+  enable-ip-masq-agent: "true"
 {{- end }}
 
 {{- if .Values.encryption.enabled }}
@@ -686,7 +686,7 @@ data:
   enable-nat46x64-gateway: {{ .Values.nat46x64Gateway.enabled | quote }}
 {{- end }}
 
-{{- if hasKey .Values.hostFirewall "enabled" }}
+{{- if and .Values.hostFirewall .Values.hostFirewall.enabled }}
   enable-host-firewall: {{ .Values.hostFirewall.enabled | quote }}
 {{- end}}
 
@@ -814,7 +814,7 @@ data:
 {{- if hasKey .Values.k8s "requireIPv6PodCIDR" }}
   k8s-require-ipv6-pod-cidr: {{ .Values.k8s.requireIPv6PodCIDR | quote }}
 {{- end }}
-{{- if hasKey .Values.endpointRoutes "enabled" }}
+{{- if and .Values.endpointRoutes .Values.endpointRoutes.enabled }}
   enable-endpoint-routes: {{ .Values.endpointRoutes.enabled | quote }}
 {{- end }}
 {{- if hasKey .Values.k8sNetworkPolicy "enabled" }}
@@ -1079,7 +1079,7 @@ data:
   k8s-service-proxy-name: {{ .Values.k8s.serviceProxyName | quote }}
 {{- end }}
 
-{{- if hasKey .Values.customCalls "enabled" }}
+{{- if and .Values.customCalls .Values.customCalls.enabled }}
   # Enable tail call hooks for custom eBPF programs.
   enable-custom-calls: {{ .Values.customCalls.enabled | quote }}
 {{- end }}
